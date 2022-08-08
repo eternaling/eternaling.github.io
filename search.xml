@@ -4,11 +4,11 @@
   
     
     <entry>
-      <title>test</title>
-      <link href="/java/f3c4e8488890/"/>
-      <url>/java/f3c4e8488890/</url>
+      <title>解决org.apache.catalina.startup.Catalina.stopServer未配置关闭端口。通过OS信号关闭服务器。服务器未关闭。问题</title>
+      <link href="/java/01db071efaa4/"/>
+      <url>/java/01db071efaa4/</url>
       
-        <content type="html"><![CDATA[]]></content>
+        <content type="html"><![CDATA[<p><a name="C5npS"></a></p><h2 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h2><p><img src="http://lsky.nightsoil.cn/2022/07/18/34ade21f58dc3.png"><br><a name="elP23"></a></p><h2 id="解决"><a href="#解决" class="headerlink" title="解决"></a>解决</h2><p>1.找到路径D:\Tomcat10\conf里的server.xml文件。<br /><img src="http://lsky.nightsoil.cn/2022/07/18/042ade0a01f35.png"><br />2.找到第22行的<Server port="-1" shutdown="SHUTDOWN">，将“-1”改为“8005”，然后保存。<br /><img src="http://lsky.nightsoil.cn/2022/07/18/831df0f03f381.png"><br /><strong>解决方法:</strong><br />打开tomcat安装文件夹—-&gt;conf文件夹—-&gt;server.xml文件,检查标签<Server port="-1" shutdown="SHUTDOWN">中的port是否正确,一般更改为8005即可.</p>]]></content>
       
       
       <categories>
@@ -18,35 +18,53 @@
       </categories>
       
       
+        <tags>
+            
+            <tag> java </tag>
+            
+            <tag> Tomcat </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>springboot启动报错Error:Kotlin: Module was compiled with an incompatible version of Kotlin. The binary</title>
+      <link href="/java/f25d4e55bfb3/"/>
+      <url>/java/f25d4e55bfb3/</url>
+      
+        <content type="html"><![CDATA[<p>springboot 启动报错<br />报错内容：<br />Error:Kotlin: Module was compiled with an incompatible version of Kotlin. The binary version of its</p><p>报错截图：<br /><img src="http://lsky.nightsoil.cn/2022/07/27/88ec2f61c58fb.png"></p><p>一开始看到这个很懵逼，明明是java项目，怎么跟Kotlin有关系</p><p>解决方法：<br />build –&gt; rebuild project<br /><img src="http://lsky.nightsoil.cn/2022/07/27/916fdd8be4b16.png"></p>]]></content>
+      
+      
+      <categories>
+          
+          <category> java </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> java </tag>
+            
+            <tag> springboot </tag>
+            
+            <tag> springboot启动报错 </tag>
+            
+        </tags>
+      
     </entry>
     
     
     
     <entry>
       <title>Hello World</title>
-      <link href="/testss/34113614768a/"/>
-      <url>/testss/34113614768a/</url>
+      <link href="/test/34113614768a/"/>
+      <url>/test/34113614768a/</url>
       
         <content type="html"><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p><h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p><h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p><h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p><h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>]]></content>
-      
-      
-      <categories>
-          
-          <category> testss </category>
-          
-      </categories>
-      
-      
-    </entry>
-    
-    
-    
-    <entry>
-      <title>博客测试文章</title>
-      <link href="/test/485c4733b77a/"/>
-      <url>/test/485c4733b77a/</url>
-      
-        <content type="html"><![CDATA[]]></content>
       
       
       <categories>
@@ -55,12 +73,6 @@
           
       </categories>
       
-      
-        <tags>
-            
-            <tag> test </tag>
-            
-        </tags>
       
     </entry>
     
