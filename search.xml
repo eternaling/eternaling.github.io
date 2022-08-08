@@ -4,6 +4,33 @@
   
     
     <entry>
+      <title>解决Tomcat乱码问题</title>
+      <link href="/java/1604274d2777/"/>
+      <url>/java/1604274d2777/</url>
+      
+        <content type="html"><![CDATA[<p><a name="ABHJq"></a></p><h2 id="一、问题提出"><a href="#一、问题提出" class="headerlink" title="一、问题提出"></a>一、问题提出</h2><p>相信很多初始Tomcat的小伙伴都会遇到下面的情况，启动Tomcat是一大堆看不懂的文字，比如。。。<br /><img src="http://lsky.nightsoil.cn/2022/07/18/95c9ba5931ed0.png"><br />相信很多有强迫症的同学，看到这些很不爽，我也是，接下来我就来说一下解决方案。<br><a name="AwjwS"></a></p><h2 id="二、乱码原因"><a href="#二、乱码原因" class="headerlink" title="二、乱码原因"></a>二、乱码原因</h2><p>产生乱码的根本原因就是编码和解码不一致，举个例子就是翻译的人与写文章的人用的不同的语言，我本来写的是中文拼音，结果你去用英语翻译，肯定翻译出来的东西看不懂。<br />比较常见的编码格式有Unicode、Ascll码、GBK、UTF-8等等，我们普遍用的都是UTF-8等等。<br><a name="V6xeA"></a></p><h2 id="三、彻底解决乱码问题"><a href="#三、彻底解决乱码问题" class="headerlink" title="三、彻底解决乱码问题"></a>三、彻底解决乱码问题</h2><p>1、打开tomcat的&#x2F;conf&#x2F;server.xml，给它显示的增加编码方式</p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;Connector connectionTimeout=<span class="string">&quot;20000&quot;</span> </span><br><span class="line">port=<span class="string">&quot;8080&quot;</span> protocol=<span class="string">&quot;HTTP/1.1&quot;</span> </span><br><span class="line">redirectPort=<span class="string">&quot;8443&quot;</span> URIEncoding=<span class="string">&quot;UTF-8&quot;</span>/&gt;</span><br></pre></td></tr></table></figure><p>2、将日志的编码格式也修改一下，打开tomcat的\conf\logging.properties。<br /><img src="http://lsky.nightsoil.cn/2022/07/18/641be5c627e4e.png">这里我简单描述一下UTF-8和GBK的关系，其实GBK编码才是指中国的中文字符，并且包含了简体中文和繁体中文；UTF-8比较强大，是全国家通用的一种编码，如果涉及多个国家语言，那么就建议使用UTF-8，所以他们按道理是可以通用的。<br />3、其实以上这两步我的问题已经解决了，但是我在看别人也提供了其他的方法，如下<br />打开tomcat下\bin\catalina.bat文件下增加</p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">set JAVA_OPTS=-Xms512m -Xmx1024m -XX:MaxPermSize=1024m -Dfile.encoding=UTF-<span class="number">8</span></span><br></pre></td></tr></table></figure><p><img src="http://lsky.nightsoil.cn/2022/07/18/7e30ab9ede242.png">注意这个使用有可能会导致不能运行，比如说我自己。。当发现运行时出现问题，请删除本段即可。</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> java </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> java </tag>
+            
+            <tag> Tomcat </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>解决org.apache.catalina.startup.Catalina.stopServer未配置关闭端口。通过OS信号关闭服务器。服务器未关闭。问题</title>
       <link href="/java/01db071efaa4/"/>
       <url>/java/01db071efaa4/</url>
