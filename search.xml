@@ -4,6 +4,60 @@
   
     
     <entry>
+      <title>idea无法连接mysql5+数据库</title>
+      <link href="/java/2257ca5bd105/"/>
+      <url>/java/2257ca5bd105/</url>
+      
+        <content type="html"><![CDATA[<p><a name="sV1ml"></a></p><h2 id="问题提出"><a href="#问题提出" class="headerlink" title="问题提出"></a>问题提出</h2><p>web应用中连接mysql数据库时后台会出现这样的提示：<br />Establishing <a href="https://so.csdn.net/so/search?q=SSL&spm=1001.2101.3001.7020">SSL</a> connection without server’s identity verification is not recommended. According to MySQL 5.5.45+,<br />5.6.26+ and 5.7.6+ requirements SSL connection must be established by default if explicit option isn’t set. For compliance with existing applications not using SSL the verifyServerCertificate property is set to ‘false’. You need either to explicitly disable SSL by setting useSSL&#x3D;false, or set useSSL&#x3D;true and provide truststore for server certificate verification.</p><p><a name="WQHqj"></a></p><h2 id="连接失败原因"><a href="#连接失败原因" class="headerlink" title="连接失败原因"></a>连接失败原因</h2><p>原因是MySQL在高版本需要指明是否进行SSL连接。</p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">SSL协议提供服务主要：   </span><br><span class="line">    <span class="number">1</span>）认证用户服务器，确保数据发送到正确的服务器； 　　 .</span><br><span class="line">    <span class="number">2</span>）加密数据，防止数据传输途中被窃取使用；</span><br><span class="line">    <span class="number">3</span>）维护数据完整性，验证数据在传输过程中是否丢失；</span><br><span class="line"></span><br><span class="line">当前支持SSL协议两层：</span><br><span class="line">   SSL记录协议（SSL Record Protocol）：建立靠传输协议（TCP）高层协议提供数据封装、压缩、加密等基本功能支持</span><br><span class="line">  SSL握手协议（SSL Handshake Protocol）：建立SSL记录协议用于实际数据传输始前通讯双进行身份认证、协商加密</span><br><span class="line">  算法、 交换加密密钥等。</span><br></pre></td></tr></table></figure><p>idea比较新的版本的话，只有8.0通用连接mysql的驱动，没有5.7之类的<br />所以会出现idea会报错，5.7的mysql存在安全风险之类的信息提醒<br />这时候只需要找到idea的mysql的配置源</p><p><a name="apcds"></a></p><h2 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h2><p>在mysql连接路径URL里配置上以下信息即可</p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">datasource:</span><br><span class="line">    driver-class-name: com.mysql.jdbc.Driver</span><br><span class="line">    url: jdbc:mysql:<span class="comment">//192.168.xx.xx:3306/xxxx?useUnicode=true&amp;characterEncoding=UTF-8&amp;serverTimezone=UTC&amp;useSSL=false</span></span><br><span class="line">    username: root</span><br><span class="line">    password: root</span><br></pre></td></tr></table></figure><p>有用信息为</p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">useSSL=<span class="literal">false</span></span><br></pre></td></tr></table></figure>]]></content>
+      
+      
+      <categories>
+          
+          <category> java </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> java </tag>
+            
+            <tag> mysql </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>maven中pom出现版本冲突</title>
+      <link href="/java/18f8739af281/"/>
+      <url>/java/18f8739af281/</url>
+      
+        <content type="html"><![CDATA[<p>在同一个项目中pom中依赖版本出现两个相同依赖，不同版本号的</p><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">exclusions</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">exclusion</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span><span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span><span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- 不用版本号 --&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">exclusion</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">exclusions</span>&gt;</span></span><br></pre></td></tr></table></figure>]]></content>
+      
+      
+      <categories>
+          
+          <category> java </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> java </tag>
+            
+            <tag> maven </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>解决Tomcat乱码问题</title>
       <link href="/java/1604274d2777/"/>
       <url>/java/1604274d2777/</url>
