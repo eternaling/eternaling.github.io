@@ -1,4 +1,4 @@
-<script type="text/javascript">
+
   document.onkeydown = function () {
       if (window.event.keyCode == 123) {
           alert("你知道的也太多了吧，回去好好休息吧！");
@@ -13,4 +13,3 @@
           event.returnValue = false;
       }
   }
-</script>
