@@ -4,6 +4,390 @@
   
     
     <entry>
+      <title>Nacos 配置使用 @Value 取值</title>
+      <link href="/java/ae740851ea06/"/>
+      <url>/java/ae740851ea06/</url>
+      
+        <content type="html"><![CDATA[<p>Nacos 被越来越多的项目使用，我们微服务中也开始使用 Nacos 来做配置。</p><p>##使用 @Value 获取配置时不能实时刷新<br>在使用中，我们可以用 @Value 来获取 Nacos 中的配置，如下</p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@RefreshScope</span></span><br><span class="line"><span class="meta">@RestController</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">TokenController</span> &#123;</span><br><span class="line"><span class="meta">@Value(&quot;$&#123;login.username&#125;&quot;)</span></span><br><span class="line"><span class="keyword">private</span> String userName;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Value(&quot;$&#123;login.password&#125;&quot;)</span></span><br><span class="line"><span class="keyword">private</span> String passWord;</span><br></pre></td></tr></table></figure><p><img src="http://lsky.nightsoil.cn/2022/09/06/2a251148f5395.png"></p>]]></content>
+      
+      
+      <categories>
+          
+          <category> java </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> java </tag>
+            
+            <tag> nacos </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>IDEA &#39;Cannot resolve symbol&#39;如何解决</title>
+      <link href="/java/8590f91763af/"/>
+      <url>/java/8590f91763af/</url>
+      
+        <content type="html"><![CDATA[<p>Cannot resolve symbol ‘EnableCustomConfig’<br />出现此类报错<br /><img src="http://lsky.nightsoil.cn/2022/08/22/458114321a7be.png"><br />点击菜单中的 “File” -&gt; “Invalidate Caches &#x2F; Restart”，然后点击对话框中的 “Invalidate and Restart”，清空 cache 并且重启。语法就会正确的高亮了。<br /><img src="http://lsky.nightsoil.cn/2022/08/22/399fadaf5d869.png"><br />里面有让勾选的，实在不知道就全部勾选起来<br /><img src="http://lsky.nightsoil.cn/2022/08/22/ca8d58fdde871.png"><br />自动重启，就可以解决问题了</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> java </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> java </tag>
+            
+            <tag> idea </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>java中字段与关键字、标识符冲突的问题</title>
+      <link href="/java/9b85edad2cbb/"/>
+      <url>/java/9b85edad2cbb/</url>
+      
+        <content type="html"><![CDATA[<p>当业务要求的字段与关键字、标识符发生冲突时，<br />java不能识别这个为字段，此时需要把这个字段更名，<br />然后给这个字段做一个别名，这样，就可以使用这个关键字的字段了<br /><img src="http://lsky.nightsoil.cn/2022/08/24/b9e16c0287279.png"></p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@JsonAlias(value = &#123;&quot;package&quot;&#125;)</span></span><br><span class="line"><span class="keyword">private</span> String packages;</span><br></pre></td></tr></table></figure><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@JsonAlias(value = &#123;&quot;业务要用的字段&quot;&#125;)</span></span><br><span class="line"><span class="keyword">private</span> String 字段更名;</span><br></pre></td></tr></table></figure>]]></content>
+      
+      
+      <categories>
+          
+          <category> java </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> java </tag>
+            
+            <tag> springboot </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>SpringBoot启动报错java.nio.charset.MalformedInputException: Input length = 1解决方案</title>
+      <link href="/java/e01ddc69e66e/"/>
+      <url>/java/e01ddc69e66e/</url>
+      
+        <content type="html"><![CDATA[<p><a name="inewX"></a></p><h3 id="问题分析："><a href="#问题分析：" class="headerlink" title="问题分析："></a>问题分析：</h3><p>java.nio.charset.MalformedInputException: Input length &#x3D; 1<br />百度了很久，网上说的千篇一律，</p><ul><li>有的说，把yml复制到txt再复制回来</li><li>有的说，设置idea的utf-8环境</li></ul><p>这些根本没有根治这个问题。</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">org.yaml.snakeyaml.error.YAMLException: java.nio.charset.MalformedInputException: Input length = 1</span><br></pre></td></tr></table></figure><p>出现这个的原因，就是解析yml文件时，中文字符集不是<strong>utf-8</strong>的原因，<br />但是通过cmd命令，mvn clean compile 后，项目又可以成功运行<br />找了很久问题，使用eclipse和idea同时测试，最终发现，是maven在项目编译时，默认字符集编码是GBK<br><a name="EhNsw"></a></p><h3 id="解决方法：检查pom文件"><a href="#解决方法：检查pom文件" class="headerlink" title="解决方法：检查pom文件"></a>解决方法：检查pom文件</h3><p>我们首先需要在pom文件中设置，编译时编码utf-8即可，如果解决不了进行第二步</p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&lt;properties&gt;</span><br><span class="line">   &lt;java.version&gt;<span class="number">1.8</span>&lt;/java.version&gt;</span><br><span class="line">    &lt;spring-cloud.version&gt;Hoxton.SR6&lt;/spring-cloud.version&gt;</span><br><span class="line">    &lt;project.build.sourceEncoding&gt;UTF-<span class="number">8</span>&lt;/project.build.sourceEncoding&gt;</span><br><span class="line">    &lt;project.reporting.outputEncoding&gt;UTF-<span class="number">8</span>&lt;/project.reporting.outputEncoding&gt;</span><br><span class="line">    &lt;maven.compiler.encoding&gt;UTF-<span class="number">8</span>&lt;/maven.compiler.encoding&gt;</span><br><span class="line">&lt;/properties&gt;</span><br></pre></td></tr></table></figure>]]></content>
+      
+      
+      <categories>
+          
+          <category> java </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> java </tag>
+            
+            <tag> springboot </tag>
+            
+            <tag> pom </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>jar中没有主清单属性</title>
+      <link href="/java/b3c4a1cf0493/"/>
+      <url>/java/b3c4a1cf0493/</url>
+      
+        <content type="html"><![CDATA[<p>pom文件中打包配置缺少repackage 设置</p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">&lt;build&gt;</span><br><span class="line">    &lt;finalName&gt;$&#123;project.artifactId&#125;&lt;/finalName&gt;</span><br><span class="line">    &lt;plugins&gt;</span><br><span class="line">        &lt;plugin&gt;</span><br><span class="line">            &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</span><br><span class="line">            &lt;artifactId&gt;spring-boot-maven-plugin&lt;/artifactId&gt;</span><br><span class="line">            &lt;executions&gt;</span><br><span class="line">                &lt;execution&gt;</span><br><span class="line">                    &lt;goals&gt;</span><br><span class="line">                        &lt;goal&gt;repackage&lt;/goal&gt;</span><br><span class="line">                    &lt;/goals&gt;</span><br><span class="line">                &lt;/execution&gt;</span><br><span class="line">            &lt;/executions&gt;</span><br><span class="line">            &lt;configuration&gt;</span><br><span class="line">                &lt;excludes&gt;</span><br><span class="line">                    &lt;exclude&gt;</span><br><span class="line">                        &lt;groupId&gt;org.projectlombok&lt;/groupId&gt;</span><br><span class="line">                        &lt;artifactId&gt;lombok&lt;/artifactId&gt;</span><br><span class="line">                    &lt;/exclude&gt;</span><br><span class="line">                &lt;/excludes&gt;</span><br><span class="line">            &lt;/configuration&gt;</span><br><span class="line">        &lt;/plugin&gt;</span><br><span class="line">    &lt;/plugins&gt;</span><br><span class="line">&lt;/build&gt;</span><br></pre></td></tr></table></figure>]]></content>
+      
+      
+      <categories>
+          
+          <category> java </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> java </tag>
+            
+            <tag> pom </tag>
+            
+            <tag> jar </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>解决&#39;org.springframework.context.ApplicationContextException:Failed to start bean &#39;documentationPluginsBootstrapper&#39;;nested&#39;</title>
+      <link href="/java/0b0ab868f230/"/>
+      <url>/java/0b0ab868f230/</url>
+      
+        <content type="html"><![CDATA[<p>集成swagger出现下面的错误</p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">org.springframework.context.ApplicationContextException:</span><br><span class="line"> Failed to start bean <span class="string">&#x27;documentationPluginsBootstrapper&#x27;</span>;</span><br><span class="line">  nested exception is java.lang.NullPointerException</span><br></pre></td></tr></table></figure><p>解决办法：在启动类加一个注解@EnableWebMvc</p><p>上边的方法可能会解决swagger导致的项目不能启动的问题，但是进入swagger的页面还是会出错。经过一系列的查找最终发现</p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">spring.mvc.pathmatch.matching-strategy=ant_path_matcher</span><br></pre></td></tr></table></figure><p>加一行配置可以解决swagger的继承报错，原因是因为swagger升级2.6x之后和springboot出现了不兼容情况。<br />两种方法解决，一种是上面说的修改配置文件，另外一种是降级swagger。</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> java </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> java </tag>
+            
+            <tag> springboot </tag>
+            
+            <tag> swagger </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>documentationPluginsBootstrapper</title>
+      <link href="/uncategorized/7d42f337fee1/"/>
+      <url>/uncategorized/7d42f337fee1/</url>
+      
+        <content type="html"><![CDATA[]]></content>
+      
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>springboot中引用mapper报红</title>
+      <link href="/java/e073ada64b6a/"/>
+      <url>/java/e073ada64b6a/</url>
+      
+        <content type="html"><![CDATA[<h3 id="问题："><a href="#问题：" class="headerlink" title="问题："></a>问题：</h3><p>在开发中，通常会遇见一个很碍眼的事情<br>使用 @Autowired<br><img src="http://lsky.nightsoil.cn/2022/10/26/9a870161d9e5e.png"><br>后面的命名会报红</p><h3 id="解决问题："><a href="#解决问题：" class="headerlink" title="解决问题："></a>解决问题：</h3><h4 id="方法一："><a href="#方法一：" class="headerlink" title="方法一："></a>方法一：</h4><p>换个注解，@Resource<br><img src="http://lsky.nightsoil.cn/2022/10/26/030b8d6a5c89c.png"></p><h4 id="方法二："><a href="#方法二：" class="headerlink" title="方法二："></a>方法二：</h4><p>使用 @Autowired 时<br>在Mapper层上加 @Repository 注解<br><img src="http://lsky.nightsoil.cn/2022/10/26/2ad112682d7ed.png"></p>]]></content>
+      
+      
+      <categories>
+          
+          <category> java </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> java </tag>
+            
+            <tag> springboot </tag>
+            
+            <tag> mapper </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>springboot报错：Exception opening socket</title>
+      <link href="/java/4f00626b9786/"/>
+      <url>/java/4f00626b9786/</url>
+      
+        <content type="html"><![CDATA[<p>异常：com.mongodb.MongoSocketOpenException: Exception opening socket</p><p><img src="http://lsky.nightsoil.cn/2023/01/06/b17e2f353d226.png"></p><p>解决办法一：<br>把 spring-boot-starter-data-mongodb 这个依赖注释掉</p><p><img src="http://lsky.nightsoil.cn/2023/01/06/ce1973296712c.png"></p><p>解决办法二：<br>在@SpringBootApplication注解后面加上(exclude &#x3D; MongoAutoConfiguration.class)</p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 这个注解可以禁用springboot自带的配置</span></span><br><span class="line"><span class="meta">@SpringBootApplication(exclude = MongoAutoConfiguration.class)</span></span><br></pre></td></tr></table></figure><p><img src="http://lsky.nightsoil.cn/2023/01/06/bf27f6c2741ae.png"></p>]]></content>
+      
+      
+      <categories>
+          
+          <category> java </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> mongodb </tag>
+            
+            <tag> java </tag>
+            
+            <tag> springboot </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>WebSocket 连接报错 WebSocket is already in CLOSING or CLOSED state. 传数据超过限制</title>
+      <link href="/java/ef11255c4187/"/>
+      <url>/java/ef11255c4187/</url>
+      
+        <content type="html"><![CDATA[<p>在前端工程与后端java简历WebSocket长连接通信时，有时浏览器会报错</p><p><code>WebSocket is already in CLOSING or CLOSED state.</code></p><p>这个问题有可能是WebSocket传递的数据长度大于8192引起的  WebSocket建立连接后传递的JSON长度要&lt;&#x3D;8192才可以，否则就会报错  <code>WebSocket is already in CLOSING or CLOSED state.</code>异常然后一直在重复连接又断开。</p><p>1、此时我们可以在web.xml中添加一下代码来限制 WebSocket 中的参数长度限制。</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"># 限制WebSocket传递数据大小为50M </span><br><span class="line">&lt;context-param&gt;</span><br><span class="line">         &lt;param-name&gt;org.apache.tomcat.websocket.textBufferSize&lt;/param-name&gt;</span><br><span class="line">         &lt;param-value&gt;5242800&lt;/param-value&gt;</span><br><span class="line">&lt;/context-param&gt;</span><br><span class="line"> </span><br><span class="line">&lt;context-param&gt;</span><br><span class="line">         &lt;param-name&gt;org.apache.tomcat.websocket.binaryBufferSize&lt;/param-name&gt;</span><br><span class="line">         &lt;param-value&gt;5242800&lt;/param-value&gt;</span><br><span class="line">&lt;/context-param&gt;</span><br></pre></td></tr></table></figure><p>添加上述代码后即可修改WebSocket的传递参数大小长度限制为50M。</p><p>2、对应SpringBoot工程来说上述方法是不可用的，因为工程目录中没有web.xml文件。此时我们可以在项目中的context目录下（或者随意新建一处代码类、块），将下面代码放入SpringBoot工程中</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">import org.springframework.boot.autoconfigure.EnableAutoConfiguration;</span><br><span class="line">import org.springframework.boot.web.servlet.ServletContextInitializer;</span><br><span class="line">import org.springframework.context.annotation.ComponentScan;</span><br><span class="line">import org.springframework.context.annotation.Configuration;</span><br><span class="line">import org.springframework.web.util.WebAppRootListener;</span><br><span class="line"> </span><br><span class="line">import javax.servlet.ServletContext;</span><br><span class="line">import javax.servlet.ServletException;</span><br><span class="line"> </span><br><span class="line">/**</span><br><span class="line"> *  添加WebSocket传递数据大小限制为50M</span><br><span class="line"> */</span><br><span class="line">@Configuration</span><br><span class="line">@ComponentScan</span><br><span class="line">@EnableAutoConfiguration</span><br><span class="line">public class WebSocketConfig implements ServletContextInitializer &#123;</span><br><span class="line"> </span><br><span class="line">    //配置websocket传输大小，50M</span><br><span class="line">    @Override</span><br><span class="line">    public void onStartup(ServletContext servletContext) throws ServletException &#123;</span><br><span class="line">        servletContext.addListener(WebAppRootListener.class);</span><br><span class="line">        servletContext.setInitParameter(&quot;org.apache.tomcat.websocket.textBufferSize&quot;,&quot;52428800&quot;);</span><br><span class="line">        servletContext.setInitParameter(&quot;org.apache.tomcat.websocket.binaryBufferSize&quot;,&quot;52428800&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p> 上述代码即可解决SpringBoot工程中WebSocket is already in CLOSING or CLOSED state..问题</p><p> 可以成功的将WebSocket传输数据的大小限制修改为50M 。 </p><p>注意：在使用的时候还发现了一个问题，如上配置假如是以springboot内置tomcat启动是没有问题的，但是打成war后使用外置tomcat运行却不生效，最终发现是因为外置tomcat版本问题，出问题的版本是tomcat8.0.xx，而使用tomcat8.5.xx就没有这个问题了</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> java </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> java </tag>
+            
+            <tag> springboot </tag>
+            
+            <tag> websocket </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>解决go包管理代理网址无法访问：proxy.golang.org</title>
+      <link href="/go/0b3509620569/"/>
+      <url>/go/0b3509620569/</url>
+      
+        <content type="html"><![CDATA[<p>默认使用的是proxy.golang.org，在国内无法访问，如下图所示：</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">bogon:demo-path user$ make build_darwin</span><br><span class="line">rm -rf target/demo-0.6.0 </span><br><span class="line">mkdir -p target/demo-0.6.0/bin </span><br><span class="line">env CGO_ENABLED=1 GO111MODULE=on go run build/spec.go target/demo-0.6.0/bin/demo-spec-0.6.0.yaml</span><br><span class="line">go: github.com/StackExchange/wmi@v0.0.0-20190523213315-cbe66965904d: Get &quot;https://proxy.golang.org/github.com/%21stack%21exchange/wmi/@v/v0.0.0-20190523213315-cbe66965904d.mod&quot;: dial tcp 34.64.4.17:443: i/o timeout</span><br><span class="line">make: *** [build_yaml] Error 1</span><br><span class="line">bogon:demo-path user$ make build_darwin</span><br></pre></td></tr></table></figure><h3 id="解决方法："><a href="#解决方法：" class="headerlink" title="解决方法："></a>解决方法：</h3><p>换一个国内能访问的代理地址：<a href="https://goproxy.cn/">https://goproxy.cn</a><br>执行命令：</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">go env -w GOPROXY=https://goproxy.cn</span><br></pre></td></tr></table></figure>]]></content>
+      
+      
+      <categories>
+          
+          <category> go </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> go </tag>
+            
+            <tag> proxy </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>Go mgo+Mongodb连接失败问题</title>
+      <link href="/go/b2d12535c4cf/"/>
+      <url>/go/b2d12535c4cf/</url>
+      
+        <content type="html"><![CDATA[<p>在使用mgo连接Mongodb时，由于使用了过高版本的Mongodb（大于v5.0+）数据库，导致连接失败，如下图：</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">dialInfo := &amp;mgo.DialInfo&#123;</span><br><span class="line">Addrs:     []string&#123;url&#125;, //远程(或本地)服务器地址及端口号</span><br><span class="line">Direct:    false,</span><br><span class="line">Timeout:   time.Second * 1,</span><br><span class="line">Database:  &quot;runoobdb&quot;, //数据库</span><br><span class="line">Source:    &quot;admin&quot;,</span><br><span class="line">Username:  &quot;rdbin&quot;,</span><br><span class="line">Password:  &quot;password&quot;,</span><br><span class="line">PoolLimit: 4096, // Session.SetPoolLimit</span><br><span class="line">Mechanism: &quot;SCRAM-SHA-1&quot;,</span><br><span class="line">// Dial: mgo.Dial(url)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>MongoDB升级到5.0.1之后，使用<code>gopkg.in/mgo.v2</code>来连接MongoDB数据库时，发现验证时出现验证错误了。<code>server returned error on SASL authentication step: BSON field &#39;saslContinue.mechanism&#39; is an unknown field.</code>。<br>MongoDB 5 支持SCRAM-SHA-1和SCRAM-SHA-256验证，mgo.v2默认是用SCRAM-SHA-1验证的，换个authMechanism&#x3D;SCRAM-SHA-256验证后，就报出个另一个错误<code>SASL support not enabled during build (-tags sasl)</code></p><h3 id="【解决办法】"><a href="#【解决办法】" class="headerlink" title="【解决办法】"></a>【解决办法】</h3><p>使用较低版本的Mongodb，亲测4.0 ok</p><p>启动命令：</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">docker pull mongo:4.0</span><br><span class="line">docker run -itd --name mongo -p 27017:27017 -v /datapath/:/data/db/  mongo:4.0--auth</span><br><span class="line">docker exec -it mongo mongo admin</span><br><span class="line"># 创建一个名为 admin，密码为 123456 的用户。密码中不要携带@，不要问我为什么，哈哈</span><br><span class="line">&gt;  db.createUser(&#123; user:&#x27;admin&#x27;,pwd:&#x27;123456&#x27;,roles:[ &#123; role:&#x27;userAdminAnyDatabase&#x27;, db: &#x27;admin&#x27;&#125;,&quot;readWriteAnyDatabase&quot;]&#125;);</span><br><span class="line"># 尝试使用上面创建的用户信息进行连接。</span><br><span class="line">&gt; db.auth(&#x27;admin&#x27;, &#x27;123456&#x27;)</span><br></pre></td></tr></table></figure>]]></content>
+      
+      
+      <categories>
+          
+          <category> go </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> go </tag>
+            
+            <tag> mgo </tag>
+            
+            <tag> mongodb </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>【问题记录】WARNING: This is a development server. Do not use it in a production deployment.</title>
+      <link href="/python/7651fcf8dc20/"/>
+      <url>/python/7651fcf8dc20/</url>
+      
+        <content type="html"><![CDATA[<h2 id="问题描述"><a href="#问题描述" class="headerlink" title="问题描述"></a>问题描述</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Environment: production</span><br><span class="line">WARNING: This is a development server. Do not use it in a production deployment.</span><br><span class="line">Use a production WSGI server instead.</span><br></pre></td></tr></table></figure><p><img src="http://lsky.nightsoil.cn/note/2023/03/03/6401b7f4c3935.png"></p><h2 id="示例代码"><a href="#示例代码" class="headerlink" title="示例代码"></a>示例代码</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">if __name__ == &#x27;__main__&#x27;:</span><br><span class="line">    app.run(debug=True)</span><br></pre></td></tr></table></figure><h2 id="原因分析"><a href="#原因分析" class="headerlink" title="原因分析"></a>原因分析</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">flask未使用 WSGI 启动，将代码改成使用wsgi启动就行了</span><br></pre></td></tr></table></figure><h2 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h2><h3 id="方法一"><a href="#方法一" class="headerlink" title="方法一"></a>方法一</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">from gevent import pywsgi</span><br><span class="line"> </span><br><span class="line">if __name__ == &#x27;__main__&#x27;:</span><br><span class="line">    server = pywsgi.WSGIServer((&#x27;127.0.0.1&#x27;, 5000), app)</span><br><span class="line">    server.serve_forever()</span><br></pre></td></tr></table></figure><h3 id="方法二"><a href="#方法二" class="headerlink" title="方法二"></a>方法二</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">from wsgiref.simple_server import make_server</span><br><span class="line"> </span><br><span class="line">if __name__ == &#x27;__main__&#x27;:</span><br><span class="line">    server = make_server(&#x27;&#x27;, 5000, app)</span><br><span class="line">    server.serve_forever()</span><br></pre></td></tr></table></figure>]]></content>
+      
+      
+      <categories>
+          
+          <category> python </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> python </tag>
+            
+            <tag> flask </tag>
+            
+            <tag> pywsgi </tag>
+            
+            <tag> gevent </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>linux pip报错：WARNING: Running pip as the ‘root‘ user can result in broken permissions and conflicting</title>
+      <link href="/python/86315f987404/"/>
+      <url>/python/86315f987404/</url>
+      
+        <content type="html"><![CDATA[<p>当我们使用pip安装python库的时候，经常会碰到这种情况，提示以“root”用户身份运行 pip 可能会导致权限损坏和冲突，往往因为这个问题，导致我们无法更新pip或下载库失败</p><p><img src="http://lsky.nightsoil.cn/note/2023/03/03/6401b6e58882d.png"></p><p>这个问题的解决方案是建立一个 虚拟环境中 ， 自所载目录树，其中包含一个Python安装一个 特别版本的蟒蛇，再加上一些额外的软件包。</p><p>不同的应用程序，然后可以使用不同的虚拟环境。 要解决的前例的相互冲突的要求， 应用程序可以有其自己的虚拟环境中的版本1.0 安装应用程序，同时B还有另一个虚拟环境与2.0版本。 如果应用程序B需要一个图书馆升级为3.0版，这将 在不影响申请的环境。</p><p>我们只需要简单的两条命令就可以解决这个问题</p><p>首先我们需要找到我们的pip安装位置,然后cd过去在该路径执行以下命令</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">find / -name pip-*</span><br></pre></td></tr></table></figure><p><img src="http://lsky.nightsoil.cn/note/2023/03/03/6401b733167af.png"></p><p>1.创建一个虚拟环境中，决定在目录里你想要的 把它和运行的 venv 模块作为一个脚本用的目录路径：</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python3 -m venv tutorial-env</span><br></pre></td></tr></table></figure><ol start="2"><li>windows</li></ol><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tutorial-env\Scripts\activate.bat</span><br></pre></td></tr></table></figure><p>linux</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">source tutorial-env/bin/activate</span><br></pre></td></tr></table></figure><p>命令执行后是没有回显的，这时候我们就可以进行更新及安装库等操作了</p><p><img src="http://lsky.nightsoil.cn/note/2023/03/03/6401b77c77efb.png"></p><p><img src="http://lsky.nightsoil.cn/note/2023/03/03/6401b785bf84e.png"></p><p>更新成功</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> python </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> linux </tag>
+            
+            <tag> pip </tag>
+            
+            <tag> python </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>idea无法连接mysql5+数据库</title>
       <link href="/java/2257ca5bd105/"/>
       <url>/java/2257ca5bd105/</url>
