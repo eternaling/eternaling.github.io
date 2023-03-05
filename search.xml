@@ -61,15 +61,15 @@
     
     <entry>
       <title>docker启动失败:Failed to start Docker Application Container Engine.</title>
-      <link href="/linux/6c81da3b708e/"/>
-      <url>/linux/6c81da3b708e/</url>
+      <link href="/docker/6c81da3b708e/"/>
+      <url>/docker/6c81da3b708e/</url>
       
         <content type="html"><![CDATA[<p>Docker官方仓库的速度会比较慢，可以配一个官方的中国加速镜像</p><p>方法是：修改 &#x2F;etc&#x2F;docker&#x2F;daemon.json 加上如下的键值:</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    &quot;registry-mirrors&quot;: [&quot;https://registry.docker-cn.com&quot;]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>然后重启docker即可</p><p><img src="http://lsky.nightsoil.cn/note/2023/02/22/63f57a7850c52.png"></p><p>但是重启却报错，根据提示查看docker服务状态，Failed to start Docker Application Container Engine.</p><p><img src="http://lsky.nightsoil.cn/note/2023/02/22/63f57a8d03e62.png"></p><p><img src="http://lsky.nightsoil.cn/note/2023/02/22/63f57aa4a5d89.png"></p><p>解决方法：</p><p>daemon.json文件中采用缩进可以，但是不能出现空格，重新加载daemon.json配置，然后重启就可以成功。</p><p><img src="http://lsky.nightsoil.cn/note/2023/02/22/63f57ac773495.png"></p>]]></content>
       
       
       <categories>
           
-          <category> linux </category>
+          <category> docker </category>
           
       </categories>
       
@@ -385,9 +385,9 @@
             
             <tag> java </tag>
             
-            <tag> springboot </tag>
-            
             <tag> websocket </tag>
+            
+            <tag> springboot </tag>
             
         </tags>
       
