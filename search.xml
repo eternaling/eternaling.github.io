@@ -4,6 +4,143 @@
   
     
     <entry>
+      <title>WebSocket is already in CLOSING or CLOSED state. 报错信息的解决方案</title>
+      <link href="/html/467d9f298e79/"/>
+      <url>/html/467d9f298e79/</url>
+      
+        <content type="html"><![CDATA[<ul><li>背景<br> 近期在对 【GatewayWorker】的开发过程中<br> 注意到，当客户端长时间没有反应时，会发生 WebSocket 自动断开的情况<br> 在此，提供一个使用定时器的解决方案 …</li></ul><h2 id="【分析原因】"><a href="#【分析原因】" class="headerlink" title="【分析原因】"></a>【分析原因】</h2><ul><li>首先，对于这种报错信息的提示，我们小小百度下就很容易明白问题所在<br> 可以参考这一篇文章 ： <a href="https://www.cnblogs.com/gxp69/p/11736749.html">WebSocket断开原因、心跳机制防止自动断开连接</a></li><li>其次，定位的知识点便是开发手册上的讲解 —— <a href="http://doc2.workerman.net/heartbeat.html">【心跳检测】</a></li></ul><h2 id="【解决步骤】"><a href="#【解决步骤】" class="headerlink" title="【解决步骤】"></a>【解决步骤】</h2><ul><li><p>第一步、首先，根据前面的手册介绍，我在服务端补充了如下的代码：</p> <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">// 心跳间隔</span><br><span class="line">$gateway-&gt;pingInterval = 57;</span><br><span class="line">$gateway-&gt;pingNotResponseLimit = 1; // 代表客户端必须定时发送心跳给服务端</span><br><span class="line">$gateway-&gt;pingData = &#x27;&#x27;;</span><br></pre></td></tr></table></figure></li><li><p>第二步、在客户端创建 连接及定时器核心代码如下：</p> <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br></pre></td><td class="code"><pre><span class="line">var interval_timer = null;//计时器</span><br><span class="line">var timer_count = 0;</span><br><span class="line">var wsUrl = &quot;wss://xxxeee.com/ssssmn&quot;;</span><br><span class="line">var ws;</span><br><span class="line"></span><br><span class="line">createOrConnectWebSocket();// 创建websocket</span><br><span class="line">/**</span><br><span class="line"> * 创建websocket或掉线重连</span><br><span class="line"> */</span><br><span class="line"> function createOrConnectWebSocket()&#123;</span><br><span class="line">    if(!ws)&#123;</span><br><span class="line">        //TODO ws 不存在</span><br><span class="line">        ws = new WebSocket(wsUrl);</span><br><span class="line">        websocketInit();</span><br><span class="line">    &#125;else &#123;</span><br><span class="line">        if (!isOnlineCurrUser())&#123;</span><br><span class="line">            ws = null;</span><br><span class="line">            createOrConnectWebSocket();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    // 开启定时器</span><br><span class="line">    init_start_timer();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">  /**</span><br><span class="line">   * websocket 的初始化</span><br><span class="line">   */</span><br><span class="line">  function websocketInit()&#123;</span><br><span class="line">   ws.onmessage = function (e) &#123;</span><br><span class="line">       var message = eval(&#x27;(&#x27; + e.data + &#x27;)&#x27;);</span><br><span class="line">       switch (message.type) &#123;</span><br><span class="line">           case &#x27;init&#x27;:</span><br><span class="line">               changeNoReadLogs();</span><br><span class="line">               var bind = &#x27;&#123;&quot;type&quot;:&quot;bind&quot;,&quot;from_id&quot;:&quot;&#x27; + from_id + &#x27;&quot;,&quot;to_id&quot;:&quot;&#x27; + to_id + &#x27;&quot;&#125;&#x27;;</span><br><span class="line">               ws.send(bind);</span><br><span class="line">               message_load();</span><br><span class="line">               break;</span><br><span class="line">           ....... 具体代码省略......</span><br><span class="line">       &#125;</span><br><span class="line">   &#125;;</span><br><span class="line">   ws.onclose = function (e) &#123;</span><br><span class="line">       console.log(&#x27;websocket 断开: &#x27; + e.code + &#x27; &#x27; + e.reason + &#x27; &#x27; + e.wasClean);</span><br><span class="line">   &#125;;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">    /**</span><br><span class="line">     * 设置一个 30秒的轮询监听方法，避免页面关闭</span><br><span class="line">     */</span><br><span class="line">    function init_start_timer() &#123;</span><br><span class="line">        //重置计数器</span><br><span class="line">        timer_count = 0;</span><br><span class="line">        if(interval_timer != null)&#123;</span><br><span class="line">            clearInterval(interval_timer);</span><br><span class="line">            interval_timer = null;</span><br><span class="line">        &#125;</span><br><span class="line">        interval_timer = setInterval(function()&#123; myTimer() &#125;, 30000);</span><br><span class="line">    &#125;</span><br><span class="line">    /**</span><br><span class="line">     *定时器具体实现方法</span><br><span class="line">     */</span><br><span class="line">    function myTimer() &#123;</span><br><span class="line">        //TODO 如果超过半小时没有交互，则关闭计时器</span><br><span class="line">        if(timer_count &gt;= 1800)&#123;</span><br><span class="line">            clearInterval(interval_timer);</span><br><span class="line">        &#125;else &#123;</span><br><span class="line">            timer_count += 30;</span><br><span class="line">            var online = &#x27;&#123;&quot;type&quot;:&quot;timer&quot;,&quot;from_id&quot;:&quot;&#x27; + from_id + &#x27;&quot;,&quot;to_id&quot;:&quot;&#x27; + to_id + &#x27;&quot;&#125;&#x27;;</span><br><span class="line">            ws.send(online);</span><br><span class="line">            console.log(&#x27;timer_count&#x27;,timer_count);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">        /**</span><br><span class="line">     * 判断当前用户是否 还在线</span><br><span class="line">     */</span><br><span class="line">    function isOnlineCurrUser() &#123;</span><br><span class="line">        if(ws)&#123;</span><br><span class="line">            if(ws.readyState == WebSocket.OPEN)&#123;</span><br><span class="line">                return true;</span><br><span class="line">            &#125;else &#123;</span><br><span class="line">                return false;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;else &#123;</span><br><span class="line">            return false;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure></li><li><p>然后，注意在发送消息时，<br> 比如点击发送键时首先判断用户是否在线，如果不在线进行重连或者提示信息</p><p> <img src="http://lsky.nightsoil.cn/note/2023/02/22/63f5e9c4361fa.png"></p></li></ul><hr><p><strong>同时，注意当顺利发送或接收到消息时,要进行初始化定时器操作，保证重新计数！</strong></p><hr><ul><li><p>第三步、测试效果 （基本解决了我的需求）<br> 在发送消息的位置，调用 <code>&quot;createOrConnectWebSocket（）&quot;</code> 方法.</p><p> <img src="http://lsky.nightsoil.cn/note/2023/02/22/63f5ea2077dc2.png"></p></li></ul>]]></content>
+      
+      
+      <categories>
+          
+          <category> html </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> html </tag>
+            
+            <tag> vue </tag>
+            
+            <tag> websocket </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>解决npm或pnpm:无法加载文件C:/Users/hp/AppData/Roaming/npm/cnpm.ps1因为在此系统上禁止运行脚本</title>
+      <link href="/vue/69005e3b2e0b/"/>
+      <url>/vue/69005e3b2e0b/</url>
+      
+        <content type="html"><![CDATA[<ul><li>在运行命令的时候，使用pnpm或者npm出现此错误</li></ul><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">pnpm : 无法加载文件 C:\Users\HP\AppData\Roaming\npm\pnpm.ps1，因为在此系统上禁止运行脚本。有关详细信息，请参阅 https:/go.microsoft.com/fwlink/?LinkID=135170 中的 about_Execution_Policies。</span><br><span class="line">所在位置 行:1 字符: 1</span><br><span class="line"> - pnpm</span><br><span class="line"> - ~~~~</span><br><span class="line">    + CategoryInfo          : SecurityError: (:) []，PSSecurityException</span><br><span class="line">    + FullyQualifiedErrorId : UnauthorizedAccess</span><br><span class="line"></span><br></pre></td></tr></table></figure><ul><li>解决方法</li></ul><p>点击左下角开始，找到Windows PowerShell，点击右键找到更多，找到以管理员身份运行</p><p><img src="http://lsky.nightsoil.cn/2023/01/29/3757c1978aa7d.png"></p><hr><p>输入命令：set-ExecutionPolicy RemoteSigned 然后回车<br>选择：输入A选择全是，或者输入Y选择是 都可以的<br>接着重新启动然后去运行就可以了</p><hr><p><img src="http://lsky.nightsoil.cn/2023/01/29/284890be32237.png"></p>]]></content>
+      
+      
+      <categories>
+          
+          <category> vue </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> npn </tag>
+            
+            <tag> pnpm </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>docker启动失败:Failed to start Docker Application Container Engine.</title>
+      <link href="/linux/6c81da3b708e/"/>
+      <url>/linux/6c81da3b708e/</url>
+      
+        <content type="html"><![CDATA[<p>Docker官方仓库的速度会比较慢，可以配一个官方的中国加速镜像</p><p>方法是：修改 &#x2F;etc&#x2F;docker&#x2F;daemon.json 加上如下的键值:</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    &quot;registry-mirrors&quot;: [&quot;https://registry.docker-cn.com&quot;]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>然后重启docker即可</p><p><img src="http://lsky.nightsoil.cn/note/2023/02/22/63f57a7850c52.png"></p><p>但是重启却报错，根据提示查看docker服务状态，Failed to start Docker Application Container Engine.</p><p><img src="http://lsky.nightsoil.cn/note/2023/02/22/63f57a8d03e62.png"></p><p><img src="http://lsky.nightsoil.cn/note/2023/02/22/63f57aa4a5d89.png"></p><p>解决方法：</p><p>daemon.json文件中采用缩进可以，但是不能出现空格，重新加载daemon.json配置，然后重启就可以成功。</p><p><img src="http://lsky.nightsoil.cn/note/2023/02/22/63f57ac773495.png"></p>]]></content>
+      
+      
+      <categories>
+          
+          <category> linux </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> docker </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>Unable to establish SSL connection.的SSL问题</title>
+      <link href="/linux/5d1595039702/"/>
+      <url>/linux/5d1595039702/</url>
+      
+        <content type="html"><![CDATA[<h3 id="解决"><a href="#解决" class="headerlink" title="解决"></a>解决</h3><p>加上参数：</p><ol><li>加上跳过验证证书的参数–no-check-certificate</li><li>有些网站不允许通过非浏览器的方式进行下载，使用代理既可以解决问题，加上代理的参数：–user-agent&#x3D;”Mozilla&#x2F;5.0 (X11;U;Linux i686;en-US;rv:1.9.0.3) Geco&#x2F;2008092416 Firefox&#x2F;3.0.3”</li></ol><p>完整的命令如下：</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wget https://git.io/vpn -O openvpn-install.sh &amp;&amp; bash openvpn-install.sh --no-check-certificate</span><br></pre></td></tr></table></figure>]]></content>
+      
+      
+      <categories>
+          
+          <category> linux </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> linux </tag>
+            
+            <tag> ssl </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>vim/vi编辑时遇到E325: ATTENTION Found a swap file by the name &#39;./.backu.sh.swp&#39;警告提示解决办法</title>
+      <link href="/linux/650c70ce43b2/"/>
+      <url>/linux/650c70ce43b2/</url>
+      
+        <content type="html"><![CDATA[<h2 id="一、问题描述"><a href="#一、问题描述" class="headerlink" title="一、问题描述"></a>一、问题描述</h2><p>前些天在修改Redis配置文件redis.conf时遇到了警告提示代码：</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">E325: ATTENTION </span><br><span class="line">Found a swap file by the name &quot;./.backu.sh.swp&quot;</span><br></pre></td></tr></table></figure><p>如图所示：</p><p><img src="http://lsky.nightsoil.cn/note/2023/02/22/63f576d02f80e.png"></p><p>问题描述：</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">E325: ATTENTION</span><br><span class="line">Found a swap file by the name &quot;/etc/redis/.redis.conf.swp&quot;</span><br><span class="line">          owned by: root   dated: Wed Feb  5 16:57:08 2020</span><br><span class="line">         file name: /etc/redis/redis.conf</span><br><span class="line">          modified: YES</span><br><span class="line">         user name: root   host name: Floret</span><br><span class="line">        process ID: 1286</span><br><span class="line">While opening file &quot;/etc/redis/redis.conf&quot;</span><br><span class="line">             dated: Mon Feb 10 16:01:06 2020</span><br><span class="line">      NEWER than swap file!</span><br><span class="line"></span><br><span class="line">(1) Another program may be editing the same file.  If this is the case,</span><br><span class="line">    be careful not to end up with two different instances of the same</span><br><span class="line">    file when making changes.  Quit, or continue with caution.</span><br><span class="line">(2) An edit session for this file crashed.</span><br><span class="line">    If this is the case, use &quot;:recover&quot; or &quot;vim -r /etc/redis/redis.conf&quot;</span><br><span class="line">    to recover the changes (see &quot;:help recovery&quot;).</span><br><span class="line">    If you did this already, delete the swap file &quot;/etc/redis/.redis.conf.swp&quot;</span><br><span class="line">    to avoid this message.</span><br><span class="line"></span><br><span class="line">Swap file &quot;/etc/redis/.redis.conf.swp&quot; already exists!</span><br><span class="line">[O]pen Read-Only, (E)dit anyway, (R)ecover, (D)elete it, (Q)uit, (A)bort:</span><br></pre></td></tr></table></figure><p>翻译如下：</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">E325：注意</span><br><span class="line">找到一个名为“/etc/redis/.redis.conf.swp”的交换文件</span><br><span class="line">所有者：根日期：2020年2月5日星期三16:57:08</span><br><span class="line">文件名：etc/redis/redis.conf</span><br><span class="line">修改：是</span><br><span class="line">用户名：根主机名：Floret</span><br><span class="line">进程ID:1286</span><br><span class="line">打开文件“/etc/redis/redis.conf”时</span><br><span class="line">日期：2020年2月10日星期一16:01:06</span><br><span class="line">比交换文件新！</span><br><span class="line"></span><br><span class="line">（1） 另一个程序可能正在编辑同一个文件。如果是这样，</span><br><span class="line">注意不要以同一个实例的两个不同实例结束</span><br><span class="line">更改时归档。退出，或小心继续。</span><br><span class="line"></span><br><span class="line">（2） 此文件的编辑会话崩溃。</span><br><span class="line">如果是这种情况，请使用“：recover”或“vim-r/etc/redis/redis.conf”</span><br><span class="line">要恢复更改（请参见“：帮助恢复”）。</span><br><span class="line">如果已经这样做了，请删除交换文件“/etc/redis/.redis.conf.swp”</span><br><span class="line">为了避免这个信息。</span><br><span class="line"></span><br><span class="line">交换文件“/ETC/RIDIS/.Redi.CON.SWP”已经存在！</span><br><span class="line">[O] 打开只读，（E）无论如何编辑，（R）恢复，（D）删除，（Q）退出，（A）中止：</span><br></pre></td></tr></table></figure><p>遇到这种错误代码的时候你肯定会看到上面这张图。<br>这种情况多半发生在上次编辑脚本或者其他文件，中途因为某些原因强制杀死进程或者强制退出导致的。</p><h2 id="二、解决问题"><a href="#二、解决问题" class="headerlink" title="二、解决问题"></a>二、解决问题</h2><h3 id="1-问题出现原因："><a href="#1-问题出现原因：" class="headerlink" title="1.问题出现原因："></a>1.问题出现原因：</h3><p>我们在编辑文件的时候，并不是对原有文件进行修改和覆盖的，而是新建一个副本，名字叫xxx.swp，我们对文件的编辑都放在了这个副本里面，这也是为什么我们能进行撤销的原因，我们并没有对原有的文件进行修改。<br>当我们正常退出时，这个文件就正常消失，而当我们异常退出时，这个文件就会作为隐藏文件，当我们下次启动vim时，它就会提示我们上次编辑时，有一个文件异常退出了，是否要进行恢复。也就是弹出E325错误。当我们异常退出时，这个隐藏文件会帮助我们还原到上次编辑的状态。也就相当于是一个自动保存的功能。</p><h3 id="2-解决办法："><a href="#2-解决办法：" class="headerlink" title="2.解决办法："></a>2.解决办法：</h3><p>注意此时可根据系统的提示进行操作：<br><img src="http://lsky.nightsoil.cn/note/2023/02/22/63f5776b67769.png"></p><p>直接键盘输入相应的字母执行命令。</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[O] 打开只读，（E）无论如何编辑，（R）恢复，（D）删除，（Q）退出，（A）中止：</span><br></pre></td></tr></table></figure><p>例如：我们需要还原文件到上次编辑的状态：</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">直接键盘键入    R</span><br></pre></td></tr></table></figure><p>可得如图示：系统提示Recovery completed,告诉你文件已经还原到了上次编辑的状态，此时你可以 ENTER 打开文件查看文件内容是否正常。</p><p><img src="http://lsky.nightsoil.cn/note/2023/02/22/63f577c386932.png"></p><h3 id="3-注意事项"><a href="#3-注意事项" class="headerlink" title="3.注意事项"></a>3.注意事项</h3><p>（1）关于.redis.conf.swp交换文件，注意以 . 开头的文件就是隐藏文件。这个文件使用ls命令查看不能发现，使用ls -a命令查看<br>如图：</p><p><img src="http://lsky.nightsoil.cn/note/2023/02/22/63f577e2db6e1.png"></p><p>（2）每间隔1秒刷新一下ls命令的执行结果，另启窗口可以观察到交换文件的生成。</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ watch -n 1 ls -a</span><br></pre></td></tr></table></figure><p>如图：<br>我们可以看到正在运行的文件。<br>（注意：此时下方窗口正在编辑修改test.txt文件，我们可以验证所做的修改不是在test.txt文件上，可以看到我们所做的修改都暂存在生成的.test.txt.swp文件中。）</p><p><img src="http://lsky.nightsoil.cn/note/2023/02/22/63f57817a3075.png"></p><p>（3）想要不再有上面的警告提示，把该文件删除即可：</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$  rm .redis.conf.swp</span><br><span class="line">rm: remove regular file `.redis.conf.swp&#x27;? y</span><br></pre></td></tr></table></figure><p>(输入指令 rm 文件名，系统会需要你输入Y 以确认删除。)</p><p>（4）使用vi或vim编辑其他文件出现类似情况的处理方法一样可以。</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> linux </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> linux </tag>
+            
+            <tag> vim </tag>
+            
+            <tag> vi </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>Nacos 配置使用 @Value 取值</title>
       <link href="/java/ae740851ea06/"/>
       <url>/java/ae740851ea06/</url>

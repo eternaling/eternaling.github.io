@@ -1,0 +1,209 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"><title>vim/vi编辑时遇到E325: ATTENTION Found a swap file by the name './.backu.sh.swp'警告提示解决办法 | Night-BUGList</title><meta name="keywords" content="linux,vim,vi"><meta name="author" content="Eternal night"><meta name="copyright" content="Eternal night"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="一、问题描述前些天在修改Redis配置文件redis.conf时遇到了警告提示代码： 12E325: ATTENTION Found a swap file by the name &quot;.&#x2F;.backu.sh.swp&quot;  如图所示：  问题描述： 12345678910111213141516171819202122E325: ATTENTIONFound a swap file">
+<meta property="og:type" content="article">
+<meta property="og:title" content="vim&#x2F;vi编辑时遇到E325: ATTENTION Found a swap file by the name &#39;.&#x2F;.backu.sh.swp&#39;警告提示解决办法">
+<meta property="og:url" content="https://hexo.nightsoil.cn/linux/650c70ce43b2/">
+<meta property="og:site_name" content="Night-BUGList">
+<meta property="og:description" content="一、问题描述前些天在修改Redis配置文件redis.conf时遇到了警告提示代码： 12E325: ATTENTION Found a swap file by the name &quot;.&#x2F;.backu.sh.swp&quot;  如图所示：  问题描述： 12345678910111213141516171819202122E325: ATTENTIONFound a swap file">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://lsky.nightsoil.cn/note/2023/02/22/63f576d02f80e.png">
+<meta property="article:published_time" content="2023-03-05T09:34:12.000Z">
+<meta property="article:modified_time" content="2023-03-05T09:37:22.913Z">
+<meta property="article:author" content="Eternal night">
+<meta property="article:tag" content="linux">
+<meta property="article:tag" content="vim">
+<meta property="article:tag" content="vi">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://lsky.nightsoil.cn/note/2023/02/22/63f576d02f80e.png"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://hexo.nightsoil.cn/linux/650c70ce43b2/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":true,"languages":{"hits_empty":"找不到您查询的内容：${query}"}},
+  translate: {"defaultEncoding":2,"translateDelay":0,"msgToTraditionalChinese":"繁","msgToSimplifiedChinese":"簡"},
+  noticeOutdate: {"limitDay":500,"position":"top","messagePrev":"It has been","messageNext":"days since the last update, the content of the article may be outdated."},
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: true
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'vim/vi编辑时遇到E325: ATTENTION Found a swap file by the name \'./.backu.sh.swp\'警告提示解决办法',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2023-03-05 17:37:22'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><script src="/js/disable.js"></script><link rel="stylesheet" href="https://npm.elemecdn.com/font-awesome@4.7.0/css/font-awesome.min.css"><script src="https://npm.elemecdn.com/live2dnew@1.0.1/live2dnew/left/index.js"></script><meta name="generator" content="Hexo 6.2.0"></head><body><div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://lsky.nightsoil.cn/2022/06/30/626d41f44e239.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">24</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">31</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">7</div></a></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/categories/java/"><i class="fa-fw fa fa-envira"></i><span> java</span></a></li><li><a class="site-page child" href="/categories/vue/"><i class="fa-fw fa fa-vimeo"></i><span> vue</span></a></li><li><a class="site-page child" href="/categories/html/"><i class="fa-fw fa fa-html5"></i><span> html</span></a></li><li><a class="site-page child" href="/categories/python/"><i class="fa-fw fa fa-python"></i><span> python</span></a></li><li><a class="site-page child" href="/categories/linux/"><i class="fa-fw fa fa-linux"></i><span> linux</span></a></li><li><a class="site-page child" href="/categories/docker/"><i class="fa-fw fa fa-docker"></i><span> docker</span></a></li></ul></div><div class="menus_item"><a class="site-page" target="_blank" rel="noopener" href="https://www.nightsoil.cn/"><i class="fa-fw fas fa-heart"></i><span> space</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="not-top-img" id="page-header"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">Night-BUGList</a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/categories/java/"><i class="fa-fw fa fa-envira"></i><span> java</span></a></li><li><a class="site-page child" href="/categories/vue/"><i class="fa-fw fa fa-vimeo"></i><span> vue</span></a></li><li><a class="site-page child" href="/categories/html/"><i class="fa-fw fa fa-html5"></i><span> html</span></a></li><li><a class="site-page child" href="/categories/python/"><i class="fa-fw fa fa-python"></i><span> python</span></a></li><li><a class="site-page child" href="/categories/linux/"><i class="fa-fw fa fa-linux"></i><span> linux</span></a></li><li><a class="site-page child" href="/categories/docker/"><i class="fa-fw fa fa-docker"></i><span> docker</span></a></li></ul></div><div class="menus_item"><a class="site-page" target="_blank" rel="noopener" href="https://www.nightsoil.cn/"><i class="fa-fw fas fa-heart"></i><span> space</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav></header><main class="layout" id="content-inner"><div id="post"><div id="post-info"><h1 class="post-title">vim/vi编辑时遇到E325: ATTENTION Found a swap file by the name './.backu.sh.swp'警告提示解决办法</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2023-03-05T09:34:12.000Z" title="发表于 2023-03-05 17:34:12">2023-03-05</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2023-03-05T09:37:22.913Z" title="更新于 2023-03-05 17:37:22">2023-03-05</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/linux/">linux</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="vim/vi编辑时遇到E325: ATTENTION Found a swap file by the name './.backu.sh.swp'警告提示解决办法"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div><article class="post-content" id="article-container"><h2 id="一、问题描述"><a href="#一、问题描述" class="headerlink" title="一、问题描述"></a>一、问题描述</h2><p>前些天在修改Redis配置文件redis.conf时遇到了警告提示代码：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">E325: ATTENTION </span><br><span class="line">Found a swap file by the name &quot;./.backu.sh.swp&quot;</span><br></pre></td></tr></table></figure>
+
+<p>如图所示：</p>
+<p><img src="http://lsky.nightsoil.cn/note/2023/02/22/63f576d02f80e.png"></p>
+<p>问题描述：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">E325: ATTENTION</span><br><span class="line">Found a swap file by the name &quot;/etc/redis/.redis.conf.swp&quot;</span><br><span class="line">          owned by: root   dated: Wed Feb  5 16:57:08 2020</span><br><span class="line">         file name: /etc/redis/redis.conf</span><br><span class="line">          modified: YES</span><br><span class="line">         user name: root   host name: Floret</span><br><span class="line">        process ID: 1286</span><br><span class="line">While opening file &quot;/etc/redis/redis.conf&quot;</span><br><span class="line">             dated: Mon Feb 10 16:01:06 2020</span><br><span class="line">      NEWER than swap file!</span><br><span class="line"></span><br><span class="line">(1) Another program may be editing the same file.  If this is the case,</span><br><span class="line">    be careful not to end up with two different instances of the same</span><br><span class="line">    file when making changes.  Quit, or continue with caution.</span><br><span class="line">(2) An edit session for this file crashed.</span><br><span class="line">    If this is the case, use &quot;:recover&quot; or &quot;vim -r /etc/redis/redis.conf&quot;</span><br><span class="line">    to recover the changes (see &quot;:help recovery&quot;).</span><br><span class="line">    If you did this already, delete the swap file &quot;/etc/redis/.redis.conf.swp&quot;</span><br><span class="line">    to avoid this message.</span><br><span class="line"></span><br><span class="line">Swap file &quot;/etc/redis/.redis.conf.swp&quot; already exists!</span><br><span class="line">[O]pen Read-Only, (E)dit anyway, (R)ecover, (D)elete it, (Q)uit, (A)bort:</span><br></pre></td></tr></table></figure>
+
+<p>翻译如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">E325：注意</span><br><span class="line">找到一个名为“/etc/redis/.redis.conf.swp”的交换文件</span><br><span class="line">所有者：根日期：2020年2月5日星期三16:57:08</span><br><span class="line">文件名：etc/redis/redis.conf</span><br><span class="line">修改：是</span><br><span class="line">用户名：根主机名：Floret</span><br><span class="line">进程ID:1286</span><br><span class="line">打开文件“/etc/redis/redis.conf”时</span><br><span class="line">日期：2020年2月10日星期一16:01:06</span><br><span class="line">比交换文件新！</span><br><span class="line"></span><br><span class="line">（1） 另一个程序可能正在编辑同一个文件。如果是这样，</span><br><span class="line">注意不要以同一个实例的两个不同实例结束</span><br><span class="line">更改时归档。退出，或小心继续。</span><br><span class="line"></span><br><span class="line">（2） 此文件的编辑会话崩溃。</span><br><span class="line">如果是这种情况，请使用“：recover”或“vim-r/etc/redis/redis.conf”</span><br><span class="line">要恢复更改（请参见“：帮助恢复”）。</span><br><span class="line">如果已经这样做了，请删除交换文件“/etc/redis/.redis.conf.swp”</span><br><span class="line">为了避免这个信息。</span><br><span class="line"></span><br><span class="line">交换文件“/ETC/RIDIS/.Redi.CON.SWP”已经存在！</span><br><span class="line">[O] 打开只读，（E）无论如何编辑，（R）恢复，（D）删除，（Q）退出，（A）中止：</span><br></pre></td></tr></table></figure>
+
+<p>遇到这种错误代码的时候你肯定会看到上面这张图。<br>这种情况多半发生在上次编辑脚本或者其他文件，中途因为某些原因强制杀死进程或者强制退出导致的。</p>
+<h2 id="二、解决问题"><a href="#二、解决问题" class="headerlink" title="二、解决问题"></a>二、解决问题</h2><h3 id="1-问题出现原因："><a href="#1-问题出现原因：" class="headerlink" title="1.问题出现原因："></a>1.问题出现原因：</h3><p>我们在编辑文件的时候，并不是对原有文件进行修改和覆盖的，而是新建一个副本，名字叫xxx.swp，我们对文件的编辑都放在了这个副本里面，这也是为什么我们能进行撤销的原因，我们并没有对原有的文件进行修改。<br>当我们正常退出时，这个文件就正常消失，而当我们异常退出时，这个文件就会作为隐藏文件，当我们下次启动vim时，它就会提示我们上次编辑时，有一个文件异常退出了，是否要进行恢复。也就是弹出E325错误。当我们异常退出时，这个隐藏文件会帮助我们还原到上次编辑的状态。也就相当于是一个自动保存的功能。</p>
+<h3 id="2-解决办法："><a href="#2-解决办法：" class="headerlink" title="2.解决办法："></a>2.解决办法：</h3><p>注意此时可根据系统的提示进行操作：<br><img src="http://lsky.nightsoil.cn/note/2023/02/22/63f5776b67769.png"></p>
+<p>直接键盘输入相应的字母执行命令。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[O] 打开只读，（E）无论如何编辑，（R）恢复，（D）删除，（Q）退出，（A）中止：</span><br></pre></td></tr></table></figure>
+
+<p>例如：我们需要还原文件到上次编辑的状态：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">直接键盘键入    R</span><br></pre></td></tr></table></figure>
+
+<p>可得如图示：系统提示Recovery completed,告诉你文件已经还原到了上次编辑的状态，此时你可以 ENTER 打开文件查看文件内容是否正常。</p>
+<p><img src="http://lsky.nightsoil.cn/note/2023/02/22/63f577c386932.png"></p>
+<h3 id="3-注意事项"><a href="#3-注意事项" class="headerlink" title="3.注意事项"></a>3.注意事项</h3><p>（1）关于.redis.conf.swp交换文件，注意以 . 开头的文件就是隐藏文件。这个文件使用ls命令查看不能发现，使用ls -a命令查看<br>如图：</p>
+<p><img src="http://lsky.nightsoil.cn/note/2023/02/22/63f577e2db6e1.png"></p>
+<p>（2）每间隔1秒刷新一下ls命令的执行结果，另启窗口可以观察到交换文件的生成。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ watch -n 1 ls -a</span><br></pre></td></tr></table></figure>
+
+<p>如图：<br>我们可以看到正在运行的文件。<br>（注意：此时下方窗口正在编辑修改test.txt文件，我们可以验证所做的修改不是在test.txt文件上，可以看到我们所做的修改都暂存在生成的.test.txt.swp文件中。）</p>
+<p><img src="http://lsky.nightsoil.cn/note/2023/02/22/63f57817a3075.png"></p>
+<p>（3）想要不再有上面的警告提示，把该文件删除即可：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$  rm .redis.conf.swp</span><br><span class="line">rm: remove regular file `.redis.conf.swp&#x27;? y</span><br></pre></td></tr></table></figure>
+
+<p>(输入指令 rm 文件名，系统会需要你输入Y 以确认删除。)</p>
+<p>（4）使用vi或vim编辑其他文件出现类似情况的处理方法一样可以。</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="https://hexo.nightsoil.cn">Eternal night</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://hexo.nightsoil.cn/linux/650c70ce43b2/">https://hexo.nightsoil.cn/linux/650c70ce43b2/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://hexo.nightsoil.cn" target="_blank">Night-BUGList</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/linux/">linux</a><a class="post-meta__tags" href="/tags/vim/">vim</a><a class="post-meta__tags" href="/tags/vi/">vi</a></div><div class="post_share"><div class="social-share" data-image="http://lsky.nightsoil.cn/note/2023/02/22/63f576d02f80e.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><div class="post-reward"><div class="reward-button"><i class="fas fa-qrcode"></i> 打赏</div><div class="reward-main"><ul class="reward-all"><li class="reward-item"><a href="/img/wechat.jpg" target="_blank"><img class="post-qr-code-img" src="/img/wechat.jpg" alt="微信"/></a><div class="post-qr-code-desc">微信</div></li><li class="reward-item"><a href="/img/alipay.jpg" target="_blank"><img class="post-qr-code-img" src="/img/alipay.jpg" alt="支付宝"/></a><div class="post-qr-code-desc">支付宝</div></li></ul></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/linux/5d1595039702/"><img class="prev-cover" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">Unable to establish SSL connection.的SSL问题</div></div></a></div><div class="next-post pull-right"><a href="/java/ae740851ea06/"><img class="next-cover" src="http://lsky.nightsoil.cn/2022/09/06/2a251148f5395.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">Nacos 配置使用 @Value 取值</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/linux/5d1595039702/" title="Unable to establish SSL connection.的SSL问题"><img class="cover" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-03-05</div><div class="title">Unable to establish SSL connection.的SSL问题</div></div></a></div><div><a href="/python/86315f987404/" title="linux pip报错：WARNING: Running pip as the ‘root‘ user can result in broken permissions and conflicting"><img class="cover" src="http://lsky.nightsoil.cn/note/2023/03/03/6401b6e58882d.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-03-05</div><div class="title">linux pip报错：WARNING: Running pip as the ‘root‘ user can result in broken permissions and conflicting</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="https://lsky.nightsoil.cn/2022/06/30/626d41f44e239.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">Eternal night</div><div class="author-info__description">力争解决一切bug<br>记录一切bug的解决方案</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">24</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">31</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">7</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://www.nightsoil.cn"><i class="fa fa-paper-plane"></i><span>Night space</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">此处是记录一些平常遇见的bug<br>并对其bug进行有效解决<br>欢迎大家前来查阅</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E9%97%AE%E9%A2%98%E6%8F%8F%E8%BF%B0"><span class="toc-number">1.</span> <span class="toc-text">一、问题描述</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E8%A7%A3%E5%86%B3%E9%97%AE%E9%A2%98"><span class="toc-number">2.</span> <span class="toc-text">二、解决问题</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E9%97%AE%E9%A2%98%E5%87%BA%E7%8E%B0%E5%8E%9F%E5%9B%A0%EF%BC%9A"><span class="toc-number">2.1.</span> <span class="toc-text">1.问题出现原因：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95%EF%BC%9A"><span class="toc-number">2.2.</span> <span class="toc-text">2.解决办法：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9"><span class="toc-number">2.3.</span> <span class="toc-text">3.注意事项</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/html/467d9f298e79/" title="WebSocket is already in CLOSING or CLOSED state. 报错信息的解决方案"><img src="http://lsky.nightsoil.cn/note/2023/02/22/63f5e9c4361fa.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="WebSocket is already in CLOSING or CLOSED state. 报错信息的解决方案"/></a><div class="content"><a class="title" href="/html/467d9f298e79/" title="WebSocket is already in CLOSING or CLOSED state. 报错信息的解决方案">WebSocket is already in CLOSING or CLOSED state. 报错信息的解决方案</a><time datetime="2023-03-05T10:44:01.000Z" title="发表于 2023-03-05 18:44:01">2023-03-05</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/vue/69005e3b2e0b/" title="解决npm或pnpm:无法加载文件C:/Users/hp/AppData/Roaming/npm/cnpm.ps1因为在此系统上禁止运行脚本"><img src="http://lsky.nightsoil.cn/2023/01/29/284890be32237.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="解决npm或pnpm:无法加载文件C:/Users/hp/AppData/Roaming/npm/cnpm.ps1因为在此系统上禁止运行脚本"/></a><div class="content"><a class="title" href="/vue/69005e3b2e0b/" title="解决npm或pnpm:无法加载文件C:/Users/hp/AppData/Roaming/npm/cnpm.ps1因为在此系统上禁止运行脚本">解决npm或pnpm:无法加载文件C:/Users/hp/AppData/Roaming/npm/cnpm.ps1因为在此系统上禁止运行脚本</a><time datetime="2023-03-05T10:39:32.000Z" title="发表于 2023-03-05 18:39:32">2023-03-05</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/linux/6c81da3b708e/" title="docker启动失败:Failed to start Docker Application Container Engine."><img src="http://lsky.nightsoil.cn/note/2023/02/22/63f57aa4a5d89.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="docker启动失败:Failed to start Docker Application Container Engine."/></a><div class="content"><a class="title" href="/linux/6c81da3b708e/" title="docker启动失败:Failed to start Docker Application Container Engine.">docker启动失败:Failed to start Docker Application Container Engine.</a><time datetime="2023-03-05T09:47:53.000Z" title="发表于 2023-03-05 17:47:53">2023-03-05</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/linux/5d1595039702/" title="Unable to establish SSL connection.的SSL问题">Unable to establish SSL connection.的SSL问题</a><time datetime="2023-03-05T09:43:00.000Z" title="发表于 2023-03-05 17:43:00">2023-03-05</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/linux/650c70ce43b2/" title="vim/vi编辑时遇到E325: ATTENTION Found a swap file by the name './.backu.sh.swp'警告提示解决办法"><img src="http://lsky.nightsoil.cn/note/2023/02/22/63f576d02f80e.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="vim/vi编辑时遇到E325: ATTENTION Found a swap file by the name './.backu.sh.swp'警告提示解决办法"/></a><div class="content"><a class="title" href="/linux/650c70ce43b2/" title="vim/vi编辑时遇到E325: ATTENTION Found a swap file by the name './.backu.sh.swp'警告提示解决办法">vim/vi编辑时遇到E325: ATTENTION Found a swap file by the name './.backu.sh.swp'警告提示解决办法</a><time datetime="2023-03-05T09:34:12.000Z" title="发表于 2023-03-05 17:34:12">2023-03-05</time></div></div></div></div></div></div></main><footer id="footer" style="background: linear-gradient(120deg, #f093fb 0%, #f5576c 100%);"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2023  <i id="heartbeat" class="fa fas fa-heartbeat"></i> Eternal night</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div><div class="footer_custom_text"><a href="https://beian.miit.gov.cn/" target="_blank">闽ICP备2022007282号-4</a><br><a target="_blank" href="https://www.beian.gov.cn/portal/registerSystemInfo?recordcode=35021102001444"><img src="https://www.nightsoil.cn/wp-content/uploads/2022/06/备案图标.png" />  闽公网安备 35021102001444号</a></div></div><head><link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/HCLonely/images@master/others/heartbeat.min.css"></head></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="translateLink" type="button" title="简繁转换">繁</button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据库加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div></div></div><div id="search-mask"></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="/js/tw_cn.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.umd.min.js"></script><script src="/js/search/local-search.js"></script><div class="js-pjax"><script>(() => {
+  const $mermaidWrap = document.querySelectorAll('#article-container .mermaid-wrap')
+  if ($mermaidWrap.length) {
+    window.runMermaid = () => {
+      window.loadMermaid = true
+      const theme = document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'default'
+
+      Array.from($mermaidWrap).forEach((item, index) => {
+        const mermaidSrc = item.firstElementChild
+        const mermaidThemeConfig = '%%{init:{ \'theme\':\'' + theme + '\'}}%%\n'
+        const mermaidID = 'mermaid-' + index
+        const mermaidDefinition = mermaidThemeConfig + mermaidSrc.textContent
+        mermaid.mermaidAPI.render(mermaidID, mermaidDefinition, (svgCode) => {
+          mermaidSrc.insertAdjacentHTML('afterend', svgCode)
+        })
+      })
+    }
+
+    const loadMermaid = () => {
+      window.loadMermaid ? runMermaid() : getScript('https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js').then(runMermaid)
+    }
+
+    window.pjax ? loadMermaid() : document.addEventListener('DOMContentLoaded', loadMermaid)
+  }
+})()</script></div><script src="https://myhkw.cn/player/js/jquery.min.js" type="text/javascript"></script><script src="https://myhkw.cn/api/player/165771402391" id="myhk" key="165771402391" m="1"></script><script src="https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js"></script><script src="/js/calendar.js"></script><script src="/js/languages.js"></script><canvas class="fireworks" mobile="false"></canvas><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/fireworks.min.js"></script><script id="canvas_nest" defer="defer" color="0,0,255" opacity="0.7" zIndex="-1" count="99" mobile="false" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/canvas-nest.min.js"></script><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/activate-power-mode.min.js"></script><script>POWERMODE.colorful = true;
+POWERMODE.shake = true;
+POWERMODE.mobile = false;
+document.body.addEventListener('input', POWERMODE);
+</script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
