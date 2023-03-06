@@ -4,6 +4,35 @@
   
     
     <entry>
+      <title>利用nvm安装npm失败的解决办法</title>
+      <link href="/vue/7875b4031737/"/>
+      <url>/vue/7875b4031737/</url>
+      
+        <content type="html"><![CDATA[<p>最近发现在安装nodejs后，想使用npm发现自己的电脑上没有安装npm，可是网上都说安装了nodejs后会自动安装npm，找了很久解决办法发现没有合适的解决办法，于是自己尝试了很久发现了问题所在。<br>在用nvm安装最新nodejs的时候，发现会安装npm失败，提示如下：</p><p><img src="http://lsky.nightsoil.cn/note/2023/03/06/64054380a9191.png"></p><p>提示：Downloading npm version 6.9.0… Download failed. Rolling Back.<br>Rollback failed. remove C:\dev\nvm\temp\npm-v6.9.0.zip: The process cannot acces<br>s the file because it is being used by another process.<br>Could not download npm for node v12.2.0.</p><h2 id="解决办法："><a href="#解决办法：" class="headerlink" title="解决办法："></a>解决办法：</h2><h3 id="第一种办法（建议直接使用第二种办法，简单粗暴）："><a href="#第一种办法（建议直接使用第二种办法，简单粗暴）：" class="headerlink" title="第一种办法（建议直接使用第二种办法，简单粗暴）："></a>第一种办法（建议直接使用第二种办法，简单粗暴）：</h3><p>找到nvm文件夹下的setting.txt</p><p><img src="http://lsky.nightsoil.cn/note/2023/03/06/64054455c8198.png"></p><p>在下面添加新的下载地址，上面四行不用动</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">node_mirror: http://npm.taobao.org/mirrors/node/</span><br><span class="line">npm_mirror: https://npm.taobao.org/mirrors/npm/</span><br></pre></td></tr></table></figure><p><img src="http://lsky.nightsoil.cn/note/2023/03/06/64054485e32f3.png"></p><p>然后保存，删除掉nvm文件夹下 ，新安装的nodejs版本，打开cmd，输入nvm install latest</p><h3 id="第二种办法："><a href="#第二种办法：" class="headerlink" title="第二种办法："></a>第二种办法：</h3><p>在<a href="http://nodejs.cn/download/%E4%B8%8B%E8%BD%BD%E4%B8%80%E4%B8%AA%E7%89%88%E6%9C%AC">http://nodejs.cn/download/下载一个版本</a> 安装到一个新建文件夹里<br>然后拷贝到nvm目录下 我这里下载的是10.15.3版本 手动给文件夹改名为10.15.3</p><p><img src="http://lsky.nightsoil.cn/note/2023/03/06/640544e1ebb2c.png"></p><p>然后在cmd里 输入 nvm use 10.15.3 成功！</p><p><img src="http://lsky.nightsoil.cn/note/2023/03/06/64054504bf09f.png"></p>]]></content>
+      
+      
+      <categories>
+          
+          <category> vue </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> vue </tag>
+            
+            <tag> nvm </tag>
+            
+            <tag> npm </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>WebSocket is already in CLOSING or CLOSED state. 报错信息的解决方案</title>
       <link href="/html/467d9f298e79/"/>
       <url>/html/467d9f298e79/</url>
@@ -20,11 +49,11 @@
       
         <tags>
             
+            <tag> websocket </tag>
+            
             <tag> html </tag>
             
             <tag> vue </tag>
-            
-            <tag> websocket </tag>
             
         </tags>
       
@@ -385,9 +414,9 @@
             
             <tag> java </tag>
             
-            <tag> websocket </tag>
-            
             <tag> springboot </tag>
+            
+            <tag> websocket </tag>
             
         </tags>
       
