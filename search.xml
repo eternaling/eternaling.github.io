@@ -4,6 +4,35 @@
   
     
     <entry>
+      <title>IDEA-解决Command line is too long. Shorten command line for SpringBootMainApplication or also for App</title>
+      <link href="/java/9aa3b1c31049/"/>
+      <url>/java/9aa3b1c31049/</url>
+      
+        <content type="html"><![CDATA[<h2 id="问题复现："><a href="#问题复现：" class="headerlink" title="问题复现："></a>问题复现：</h2><p>今天在使用IDEA启动一个开源项目的时候，报了一个错误。具体错误内容如下：</p><p><img src="http://lsky.nightsoil.cn/note/2023/03/15/641161f96e97e.png"></p><hr><p>Error running ‘Application’:<br>Command line is too long. Shorten command line for SpringBootMainApplication or also for Application</p><hr><h2 id="问题分析"><a href="#问题分析" class="headerlink" title="问题分析"></a>问题分析</h2><h3 id="错误原因："><a href="#错误原因：" class="headerlink" title="错误原因："></a>错误原因：</h3><p>看报错的那段英文，可知是<code>命令行太长</code>的原因导致SpringBoot和整个应用无法成功启动，那为什么会报这样一个错误呢？</p><h3 id="错误分析："><a href="#错误分析：" class="headerlink" title="错误分析："></a>错误分析：</h3><p>其实IDEA底层是通过<code>命令行</code>或者<code>文件</code>的方式将classpath传递到Java的JVM虚拟机上的，而大多数的操作系统都会有<code>命令行的最大长度限制</code>，超过这个限定值时就会导致IDEA无法启动当前程序。</p><h3 id="错误解决："><a href="#错误解决：" class="headerlink" title="错误解决："></a>错误解决：</h3><p>当命令行长度大于<code>32768个字符</code>时，将IDEA切换到<code>动态类路径</code>。长类路径被<code>写入文件</code>，然后由应用程序启动器读取并通过<code>系统类加载器加载</code>。</p><hr><h2 id="具体解决步骤"><a href="#具体解决步骤" class="headerlink" title="具体解决步骤"></a>具体解决步骤</h2><h3 id="Step1：找到项目目录下的-idea-workspace-xml文件"><a href="#Step1：找到项目目录下的-idea-workspace-xml文件" class="headerlink" title="Step1：找到项目目录下的.idea\workspace.xml文件"></a>Step1：找到项目目录下的.idea\workspace.xml文件</h3><p>具体位置如下图所示：</p><p><img src="http://lsky.nightsoil.cn/note/2023/03/15/6411643a084c0.png"></p><h3 id="Step2：找到workspace-xml文件下的PropertiesComponent标签栏"><a href="#Step2：找到workspace-xml文件下的PropertiesComponent标签栏" class="headerlink" title="Step2：找到workspace.xml文件下的PropertiesComponent标签栏"></a>Step2：找到workspace.xml文件下的PropertiesComponent标签栏</h3><p><img src="http://lsky.nightsoil.cn/note/2023/03/15/641164539d8d1.png"></p><h3 id="Step3：在PropertiesComponent标签栏内添加如下代码"><a href="#Step3：在PropertiesComponent标签栏内添加如下代码" class="headerlink" title="Step3：在PropertiesComponent标签栏内添加如下代码"></a>Step3：在PropertiesComponent标签栏内添加如下代码</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;property name=&quot;dynamic.classpath&quot; value=&quot;true&quot; /&gt;</span><br></pre></td></tr></table></figure><p><img src="http://lsky.nightsoil.cn/note/2023/03/15/6411647611505.png"></p><p>该配置的主要功能就是<code>开启IDEA的动态类路径</code>，将太长的<code>类路径写入文件</code>，然后由应用程序启动器读取并通过<code>系统类加载器加载</code>。</p><p>具体实现可以查看IDEA社区版源代码，<code>JdkUtil.java</code>文件，setupJVMCommandLine方法。</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> java </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> idea </tag>
+            
+            <tag> java </tag>
+            
+            <tag> springboot </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>利用nvm安装npm失败的解决办法</title>
       <link href="/vue/7875b4031737/"/>
       <url>/vue/7875b4031737/</url>
@@ -49,11 +78,11 @@
       
         <tags>
             
-            <tag> websocket </tag>
-            
             <tag> html </tag>
             
             <tag> vue </tag>
+            
+            <tag> websocket </tag>
             
         </tags>
       
@@ -213,9 +242,9 @@
       
         <tags>
             
-            <tag> java </tag>
-            
             <tag> idea </tag>
+            
+            <tag> java </tag>
             
         </tags>
       
