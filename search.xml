@@ -78,11 +78,11 @@
       
         <tags>
             
+            <tag> websocket </tag>
+            
             <tag> html </tag>
             
             <tag> vue </tag>
-            
-            <tag> websocket </tag>
             
         </tags>
       
@@ -412,11 +412,11 @@
       
         <tags>
             
-            <tag> mongodb </tag>
-            
             <tag> java </tag>
             
             <tag> springboot </tag>
+            
+            <tag> mongodb </tag>
             
         </tags>
       
