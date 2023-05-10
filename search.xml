@@ -4,6 +4,33 @@
   
     
     <entry>
+      <title>Spring Boot 2.6.0 新特性默认禁止循环引用</title>
+      <link href="/java/e4388f81a998/"/>
+      <url>/java/e4388f81a998/</url>
+      
+        <content type="html"><![CDATA[<p>如下代码，ComponentA类注入ComponentB类，ComponentB类注入ComponentA类，就会发生循环依赖的问题，在2.6.0之前，spring会自动处理循环依赖的问题</p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> org.springframework.stereotype.Service;</span><br><span class="line"><span class="keyword">import</span> javax.annotation.Resource;</span><br><span class="line"> </span><br><span class="line"><span class="meta">@Service</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">ComponentA</span> &#123;</span><br><span class="line"> </span><br><span class="line">    <span class="meta">@Resource</span></span><br><span class="line">    <span class="keyword">private</span> ComponentB componentB;</span><br><span class="line"> </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> org.springframework.stereotype.Service;</span><br><span class="line"><span class="keyword">import</span> javax.annotation.Resource;</span><br><span class="line"> </span><br><span class="line"><span class="meta">@Service</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">ComponentB</span> &#123;</span><br><span class="line"> </span><br><span class="line">    <span class="meta">@Resource</span></span><br><span class="line">    <span class="keyword">private</span> ComponentA componentA;</span><br><span class="line"> </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>现在，2.6.0 这个版本已经默认禁止 Bean 之间的循环引用，如果存在循环引用就会启动失败报错：<br>:::info<br><em><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><br />APPLICATION FAILED TO START<br /></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></em></p><p>Description:</p><p>The dependencies of some of the beans in the application context form a cycle:</p><p>┌─────┐<br />|  componentA<br />↑     ↓<br />|  componentB<br />└─────┘</p><p>Action:</p><p>Relying upon circular references is discouraged and they are prohibited by default. Update your application to remove the dependency cycle between beans. As a last resort, it may be possible to break the cycle automatically by setting spring.main.allow-circular-references to true.<br>:::<br>处理方案一：<br />整改业务，清理掉所有存在循环引用的 Bean<br />处理方案二：</p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">spring:</span><br><span class="line">  main:</span><br><span class="line">    allow-circular-references: <span class="literal">true</span></span><br></pre></td></tr></table></figure><p>处理方案三：</p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> org.springframework.boot.SpringApplication;</span><br><span class="line"><span class="keyword">import</span> org.springframework.boot.autoconfigure.SpringBootApplication;</span><br><span class="line"> </span><br><span class="line"><span class="meta">@SpringBootApplication</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">SpringDemoApplication</span> &#123;</span><br><span class="line"> </span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">        <span class="type">SpringApplication</span> <span class="variable">application</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">SpringApplication</span>(SpringDemoApplication.class);</span><br><span class="line">        application.setAllowCircularReferences(Boolean.TRUE);</span><br><span class="line">        application.run(args);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>]]></content>
+      
+      
+      <categories>
+          
+          <category> java </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> java </tag>
+            
+            <tag> springboot </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>IDEA-解决Command line is too long. Shorten command line for SpringBootMainApplication or also for App</title>
       <link href="/java/9aa3b1c31049/"/>
       <url>/java/9aa3b1c31049/</url>
@@ -412,9 +439,9 @@
       
         <tags>
             
-            <tag> mongodb </tag>
-            
             <tag> java </tag>
+            
+            <tag> mongodb </tag>
             
             <tag> springboot </tag>
             
