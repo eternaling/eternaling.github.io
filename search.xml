@@ -4,6 +4,35 @@
   
     
     <entry>
+      <title>redis外网访问方法</title>
+      <link href="/redis/9f1c5aa04a43/"/>
+      <url>/redis/9f1c5aa04a43/</url>
+      
+        <content type="html"><![CDATA[<p>很多时候我们的redis的IP地址一般都是默认的127.0.0.1代表只能接受本机的访问，因此我们其他机器上想要访问这个redis的时候，就需要去修改ip地址的访问。</p><h3 id="第一步：进入到我们的redis配置文件，比如我这里是在-x2F-opt-x2F-myRedis-x2F-redis-conf，使用命令跳转到相应路径下"><a href="#第一步：进入到我们的redis配置文件，比如我这里是在-x2F-opt-x2F-myRedis-x2F-redis-conf，使用命令跳转到相应路径下" class="headerlink" title="第一步：进入到我们的redis配置文件，比如我这里是在&#x2F;opt&#x2F;myRedis&#x2F;redis.conf，使用命令跳转到相应路径下"></a>第一步：进入到我们的redis配置文件，比如我这里是在&#x2F;opt&#x2F;myRedis&#x2F;redis.conf，使用命令跳转到相应路径下</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cd /opt/myRedis/</span><br></pre></td></tr></table></figure><h3 id="第二步：编辑该目录下的redis-conf配置文件"><a href="#第二步：编辑该目录下的redis-conf配置文件" class="headerlink" title="第二步：编辑该目录下的redis.conf配置文件"></a>第二步：编辑该目录下的redis.conf配置文件</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim redis.conf</span><br></pre></td></tr></table></figure><h3 id="第三步：进入到配置文件之后，在查看模式下（也就是在只读的时候，跳转到最后一行，好像是按一个G可以快捷跳转）按下-x2F-可以在文本里面查找，在文本末尾输入"><a href="#第三步：进入到配置文件之后，在查看模式下（也就是在只读的时候，跳转到最后一行，好像是按一个G可以快捷跳转）按下-x2F-可以在文本里面查找，在文本末尾输入" class="headerlink" title="第三步：进入到配置文件之后，在查看模式下（也就是在只读的时候，跳转到最后一行，好像是按一个G可以快捷跳转）按下&#x2F;可以在文本里面查找，在文本末尾输入"></a>第三步：进入到配置文件之后，在查看模式下（也就是在只读的时候，跳转到最后一行，好像是按一个G可以快捷跳转）按下&#x2F;可以在文本里面查找，在文本末尾输入</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/bind</span><br></pre></td></tr></table></figure><p>找到127.0.0.1<br>将它注释掉</p><p><img src="http://lsky.nightsoil.cn/note/2023/05/14/6460e97dc4b5c.png"></p><h3 id="第四步：找到protected-mode-yes-改为-no"><a href="#第四步：找到protected-mode-yes-改为-no" class="headerlink" title="第四步：找到protected -mode yes 改为 no"></a>第四步：找到protected -mode yes 改为 no</h3><p><img src="http://lsky.nightsoil.cn/note/2023/05/14/6460ea677389b.png"></p><p>然后重启redis服务就可以了。</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> redis </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> linux </tag>
+            
+            <tag> redis </tag>
+            
+            <tag> baota </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>start.spring.io 无法访问解决办法</title>
       <link href="/java/a04025ca8cf5/"/>
       <url>/java/a04025ca8cf5/</url>
